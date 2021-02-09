@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace ADOWebApplication1
 {
@@ -12,8 +13,9 @@ namespace ADOWebApplication1
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            string learningDBConnection = ConfigurationManager.ConnectionStrings["learningDBConnection"].ConnectionString;
             string connectionString = "server = (local); database = Learning_DB; integrated security = true";
-            SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
+            SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder(learningDBConnection);
             using (SqlConnection connection = new SqlConnection(sqlConnectionStringBuilder.ConnectionString))
             {
                 SqlCommand sqlCommand = new SqlCommand("SELECT [Department],[DepartmentHead]FROM [tblDepartment]", connection);
